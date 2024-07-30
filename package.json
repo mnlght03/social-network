@@ -14,6 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.1.5",
     "nuxt": "^3.12.4",
     "nuxt-svgo": "^4.0.2",
     "vue": "latest"
@@ -24,6 +25,7 @@
     "eslint": "^9.7.0",
     "husky": "^9.1.1",
     "sass": "^1.77.8",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vite-plugin-vue-css-module": "^2.0.1"
   }
 }

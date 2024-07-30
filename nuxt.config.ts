@@ -1,3 +1,5 @@
+import vueCssModule from 'vite-plugin-vue-css-module'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -5,6 +7,12 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', 'nuxt-svgo'],
 
   css: ['~/assets/style/main.scss'],
+
+  vite: {
+    plugins: [
+      vueCssModule(),
+    ],
+  },
 
   runtimeConfig: {},
 })
