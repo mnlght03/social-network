@@ -11,13 +11,15 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.5",
     "nuxt": "^3.12.4",
     "nuxt-svgo": "^4.0.2",
-    "vue": "latest"
+    "vue": "latest",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.0",
