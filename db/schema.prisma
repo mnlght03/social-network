@@ -1,0 +1,33 @@
+datasource db {
+  provider = "postgresql"
+  url =  env("NUXT_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  email String
+  username String @unique
+  password String
+  name String?
+  profileImage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshToken RefreshToken[]
+
+  @@index([email])
+}
+
+model RefreshToken {
+  token String @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+}

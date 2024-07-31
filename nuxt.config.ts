@@ -14,5 +14,10 @@ export default defineNuxtConfig({
     ],
   },
 
-  runtimeConfig: {},
+  // override in .env with NUXT_ prefix
+  // i.e. NUXT_DATABASE_URL
+  runtimeConfig: {
+    databaseUrl: '',
+    jwtSecret: '',
+  },
 })
