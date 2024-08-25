@@ -32,6 +32,8 @@ const schema = z.object({
   })
 })
 
+export type RegisterRequest = typeof schema._type
+
 export default defineEventHandler(async (event) => {
   const { email, username, name, password } = schema.parse(await readBody(event))
 

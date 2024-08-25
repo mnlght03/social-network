@@ -24,3 +24,13 @@ export function generateJwtPair(userId: string) {
     refreshToken: generateRefreshToken(userId),
   }
 }
+
+export function verifyToken(token: string) {
+  try {
+    // Throws error on expired token
+    return jwt.verify(token, jwtSecret) as jwt.JwtPayload
+  }
+  catch {
+    return undefined
+  }
+}

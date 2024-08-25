@@ -1,12 +1,15 @@
 import bcrypt from 'bcrypt'
 import { z } from 'zod'
 import { db } from '~/db'
+import { setRefreshCookie } from '~/server/utils/auth'
 import { generateJwtPair } from '~/server/utils/jwt'
 
 const schema = z.object({
   username: z.string(),
   password: z.string(),
 })
+
+export type LoginRequest = typeof schema._type
 
 export default defineEventHandler(async (event) => {
   const { username, password } = schema.parse(await readBody(event))
@@ -30,10 +33,7 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  setCookie(event, 'refresh_token', refreshToken, {
-    httpOnly: true,
-    sameSite: true,
-  })
+  setRefreshCookie(event, refreshToken)
 
   return {
     accessToken,
