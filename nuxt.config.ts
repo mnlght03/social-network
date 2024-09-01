@@ -21,5 +21,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     databaseUrl: '',
     jwtSecret: '',
+    cloudinary: {
+      apiKey: '',
+      apiSecret: '',
+      cloudName: '',
+    },
   },
 })

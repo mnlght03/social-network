@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
     return handleError(event)
   }
 
+  // TODO: use ORM relation user -> refreshTokens[]
   const user = await db.user.findUnique({ where: { id: payload.userId } })
   const dbToken = await db.refreshToken.findUnique({ where: { token: refreshToken, userId: payload.userId } })
   if (!user || !dbToken) {

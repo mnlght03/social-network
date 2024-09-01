@@ -1,8 +1,7 @@
 import { db } from '~/db'
-import { getUserIdFromEventOrThrow } from '~/server/utils/auth'
 
 export default defineEventHandler(async (event) => {
-  const userId = getUserIdFromEventOrThrow(event)
+  const userId = getEventUserIdOrThrow(event)
   const user = await db.user.findUniqueOrThrow({
     where: { id: userId },
     select: {

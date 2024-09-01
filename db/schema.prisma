@@ -19,7 +19,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  refreshToken RefreshToken[]
+  refreshTokens RefreshToken[]
+  posts UserPost[]
 
   @@index([email])
 }
@@ -30,4 +31,21 @@ model RefreshToken {
   updatedAt DateTime @updatedAt
   userId String @db.Uuid
   user User @relation(fields: [userId], references: [id])
+}
+
+model UserPost {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text String
+
+  authorId String @db.Uuid
+  author User @relation(fields: [authorId], references: [id])
+
+  replyToId String? @db.Uuid
+  replyTo UserPost? @relation("replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies UserPost[] @relation("replies")
+
+  imageUrl String?
+  deleted Boolean @default(false)
 }

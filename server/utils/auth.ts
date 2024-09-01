@@ -16,7 +16,7 @@ export function getRefreshCookie(event: H3Event) {
   return getCookie(event, 'refresh_token')
 }
 
-export function getUserIdFromEventOrThrow(event: H3Event) {
+export function getEventUserIdOrThrow(event: H3Event) {
   const token = getRequestHeader(event, 'authorization')?.split(' ')[1]
   const payload = token ? verifyToken(token) : undefined
   if (!payload) {
