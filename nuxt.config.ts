@@ -4,7 +4,10 @@ import vueCssModule from 'vite-plugin-vue-css-module'
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-svgo'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'nuxt-svgo',
+  ],
 
   css: ['~/assets/style/main.scss'],
 
@@ -14,8 +17,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  // override in .env with NUXT_ prefix
-  // i.e. NUXT_DATABASE_URL
+  // Override in .env with NUXT_ prefix, i.e. NUXT_DATABASE_URL
   runtimeConfig: {
     databaseUrl: '',
     jwtSecret: '',

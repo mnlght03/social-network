@@ -1,29 +1,28 @@
 import type { LoginRequest, RegisterRequest } from '~/server/types'
 import type { User } from '~/types'
 
-export const useAuthToken = () => useState<string | undefined>(() => undefined)
-export const useAuthUser = () => useState<User | undefined>(() => undefined)
-
 export function useAuth() {
+  const token = useState<string | undefined>(() => undefined)
+  const user = useState<User | undefined>(() => undefined)
+
   const refreshTokens = async () => {
     try {
       const { accessToken } = await $fetch('/api/auth/refresh', { method: 'post' })
-      useAuthToken().value = accessToken
+      token.value = accessToken
     }
     catch {
-      useAuthToken().value = undefined
+      token.value = undefined
     }
   }
 
   // Send authorization token on each request,
-  // on 401 error refresh tokens and try reqeust again
+  // on 401 error refresh tokens and try reqeust again.
   const $fetchWithToken = $fetch.create({
     onRequest({ options }) {
-      const token = useAuthToken().value
-      if (token) {
+      if (token.value) {
         options.headers ??= {}
         const headers = options.headers as Record<string, string>
-        headers.authorization = `Bearer ${token}`
+        headers.authorization = `Bearer ${token.value}`
       }
     },
     async onResponseError() {
@@ -35,8 +34,8 @@ export function useAuth() {
   })
 
   const fetchCurrentUser = async () => {
-    const user = await $fetchWithToken('/api/auth/whoami')
-    useAuthUser().value = user
+    const fetchedUser = await $fetchWithToken('/api/auth/whoami')
+    user.value = fetchedUser
   }
 
   const login = async (data: LoginRequest) => {
@@ -44,7 +43,7 @@ export function useAuth() {
       method: 'post',
       body: data,
     })
-    useAuthToken().value = accessToken
+    token.value = accessToken
     await fetchCurrentUser()
   }
 
@@ -65,5 +64,24 @@ export function useAuth() {
     }
   }
 
-  return { login, register, refreshTokens, init, fetchCurrentUser, $fetchWithToken }
+  return {
+    token,
+    user,
+    login,
+    register,
+    refreshTokens,
+    init,
+    fetchCurrentUser,
+    $fetchWithToken,
+  }
+}
+
+export function useAuthToken() {
+  const token = useAuth().token
+  return computed(() => token.value)
+}
+
+export function useAuthUser() {
+  const user = useAuth().user
+  return computed(() => user.value)
 }
