@@ -1,12 +1,14 @@
 <script setup lang="ts">
-const user = useAuthUser()
+import type { User } from '~/types'
+
+defineProps<{
+  user: User
+}>()
 </script>
 
 <template>
   <div>
-    <MainSection title="Home">
-      <PostForm :user="user!" />
-    </MainSection>
+    <PostFormInput :user="user" />
   </div>
 </template>
 

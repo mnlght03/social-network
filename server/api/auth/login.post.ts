@@ -4,12 +4,12 @@ import { db } from '~/db'
 import { setRefreshCookie } from '~/server/utils/auth'
 import { generateJwtPair } from '~/server/utils/jwt'
 
-const schema = z.object({
+const schema = createBodySchema(z.object({
   username: z.string(),
   password: z.string(),
-})
+}))
 
-export type LoginRequest = typeof schema._type
+export type LoginRequest = z.infer<typeof schema>
 
 export default defineEventHandler(async (event) => {
   const { username, password } = schema.parse(await readBody(event))

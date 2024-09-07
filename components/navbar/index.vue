@@ -60,7 +60,7 @@ const tabs = [
 </script>
 
 <template>
-  <div class="border-2 border-red-500 hidden md:block xs:col-span-1 xl:col-span-2">
+  <div class="hidden md:block xs:col-span-1 xl:col-span-2">
     <div class="sticky top-0">
       <div class="flex flex-col h-screen">
         <div class="p-2 my-2 hover:bg-blue-50 rounded-full w-min dark:hover:bg-white/20" :class="defaultTransition">

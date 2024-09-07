@@ -10,7 +10,7 @@ const passwordMinLength = 6
 const passwordMaxLength = 256
 const passwordLengthErrorMessage = `Password should be ${passwordMinLength} - ${passwordMaxLength} symbols long.`
 
-const schema = z.object({
+const schema = createBodySchema(z.object({
   email: z.string().email('Invalid email.'),
   username: z.string()
     .min(usernameMinLength, usernameLengthErrorMessage)
@@ -24,15 +24,9 @@ const schema = z.object({
 }).refine(({ password, repeatPassword }) => password === repeatPassword, {
   message: 'Passwords don\'t match.',
   path: ['repeatPassword'],
-}).catch(({ error }) => {
-  throw createError({
-    statusCode: 400,
-    statusMessage: 'Bad Request',
-    data: error.flatten().fieldErrors,
-  })
-})
+}))
 
-export type RegisterRequest = typeof schema._type
+export type RegisterRequest = z.infer<typeof schema>
 
 export default defineEventHandler(async (event) => {
   const { email, username, name, password } = schema.parse(await readBody(event))

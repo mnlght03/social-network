@@ -20,7 +20,7 @@ const whoToFollow = [
 </script>
 
 <template>
-  <div class="hidden md:block col-span-12  md:col-span-3 xl:col-span-4 bg-blue-500">
+  <div class="hidden md:block col-span-12  md:col-span-3 xl:col-span-4">
     <aside>
       <WidgetCard title="What's happening">
         <WidgetCardItem v-for="item, i in whatsHappening" :key="i">

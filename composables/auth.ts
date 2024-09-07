@@ -6,18 +6,20 @@ export function useAuth() {
   const user = useState<User | undefined>(() => undefined)
 
   const refreshTokens = async () => {
-    try {
-      const { accessToken } = await $fetch('/api/auth/refresh', { method: 'post' })
-      token.value = accessToken
-    }
-    catch {
-      token.value = undefined
-    }
+    const { accessToken } = await $fetch('/api/auth/refresh', {
+      method: 'post',
+      credentials: 'same-origin',
+      headers: {
+        authorization: `Bearer: ${token.value}`,
+      },
+    })
+    token.value = accessToken
   }
 
   // Send authorization token on each request,
   // on 401 error refresh tokens and try reqeust again.
   const $fetchWithToken = $fetch.create({
+    credentials: 'same-origin',
     onRequest({ options }) {
       if (token.value) {
         options.headers ??= {}
@@ -42,6 +44,7 @@ export function useAuth() {
     const { accessToken } = await $fetch('/api/auth/login', {
       method: 'post',
       body: data,
+      credentials: 'same-origin',
     })
     token.value = accessToken
     await fetchCurrentUser()

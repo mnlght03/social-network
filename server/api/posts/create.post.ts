@@ -3,28 +3,16 @@ import { z } from 'zod'
 
 import { db } from '~/db'
 
-const bodySchema = z.object({
+const bodySchema = createBodySchema(z.object({
   text: z.string().array().transform(data => data[0]),
   replyToId: z.string().array().transform(data => data[0]).optional(),
-}).catch(({ error }) => {
-  throw createError({
-    statusCode: 400,
-    statusMessage: 'Bad Request',
-    data: error.flatten().fieldErrors,
-  })
-})
+}))
 
-const fileSchema = z.object({
+const fileSchema = createBodySchema(z.object({
   image: z.object({
     filepath: z.string(),
   }).array().transform(data => data[0]).optional(),
-}).catch(({ error }) => {
-  throw createError({
-    statusCode: 400,
-    statusMessage: 'Bad Request',
-    data: error.flatten(),
-  })
-})
+}))
 
 export default defineEventHandler(async (event) => {
   const userId = await getEventUserIdOrThrow(event)

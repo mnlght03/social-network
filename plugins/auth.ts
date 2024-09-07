@@ -10,6 +10,7 @@ export default defineNuxtPlugin(async () => {
     }
     try {
       await auth.refreshTokens()
+      await auth.fetchCurrentUser()
       return true
     }
     catch {
