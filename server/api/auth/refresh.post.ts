@@ -12,7 +12,7 @@ function handleError(event: H3Event) {
 }
 
 export default defineEventHandler(async (event) => {
-  const refreshToken = getCookie(event, 'refresh_token')
+  const refreshToken = getRefreshCookie(event)
   const payload = refreshToken ? verifyToken(refreshToken) : undefined
   if (!payload) {
     return handleError(event)

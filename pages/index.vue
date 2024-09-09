@@ -5,7 +5,7 @@ const user = useAuthUser()
 <template>
   <div>
     <MainSection title="Home">
-      <PostForm :user="user!" />
+      <PostForm v-if="user" :user="user" />
     </MainSection>
   </div>
 </template>

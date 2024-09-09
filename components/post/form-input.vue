@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { User } from '~/types'
+import IconPicture from '~/assets/icons/picture.svg'
 
 defineProps<{
   user: User
@@ -28,6 +29,12 @@ async function submit() {
 
       <div class="w-full p-2">
         <textarea v-model.trim="message" class="w-full h-10 text-lg text-gray-900 placeholder:text-gray-400 bg-transparent border-0 dark:text-white focus:ring-0" />
+      </div>
+
+      <div class="flex p-2 pl-14">
+        <div class="p-2 text-blue-400 rounded-full hover:bg-blue-500 dark:hover:bg-dim-800">
+          <IconPicture class="h-5 w-5" />
+        </div>
       </div>
 
       <div>
