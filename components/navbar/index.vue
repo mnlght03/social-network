@@ -7,6 +7,7 @@ import {
   HashtagIcon,
   HomeIcon,
   InboxIcon,
+  PencilIcon,
   UserIcon,
 } from '@heroicons/vue/16/solid'
 import IconLogo from '~/public/logo.svg'
@@ -69,13 +70,17 @@ const tabs = [
           </NuxtLink>
         </div>
 
-        <nav class="mt-2 space-y-3">
+        <nav class="mt-2 flex flex-col gap-3">
           <NavbarTab v-for="(tab, i) in tabs" :key="i" :to="tab.to">
             <template #icon>
               <component :is="tab.icon" />
             </template>
             {{ tab.text }}
           </NavbarTab>
+
+          <UiButton class="xl:hidden">
+            <PencilIcon class="w-6 h-6 font-bold" />
+          </UiButton>
         </nav>
       </div>
     </div>

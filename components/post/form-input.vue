@@ -83,9 +83,11 @@ const { borderColor } = useTailwindConfig()
           <IconCalendar class="h-5 w-5" />
         </button>
 
-        <button class="ml-auto" @click="submit()">
-          Submit
-        </button>
+        <UiButton class="ml-auto" size="sm" @click="submit()">
+          <span class="font-bold">
+            Submit
+          </span>
+        </UiButton>
       </div>
     </div>
   </div>
