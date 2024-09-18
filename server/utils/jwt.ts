@@ -25,6 +25,7 @@ export function generateJwtPair(userId: string) {
   }
 }
 
+/** Returns token payload if token is valid, undefined otherwise */
 export function verifyToken(token: string) {
   try {
     // Throws error on expired token

@@ -12,7 +12,7 @@ const schema = createBodyValidationSchema(z.object({
 export type LoginRequest = z.infer<typeof schema>
 
 export default defineEventHandler(async (event) => {
-  const { username, password } = schema.parse(await readBody(event))
+  const { username, password } = await readValidatedBody(event, schema.parse)
 
   const user = await db.user.findUnique({
     where: { username },

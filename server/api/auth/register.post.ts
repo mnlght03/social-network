@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     username,
     name,
     password,
-  } = schema.parse(await readBody(event))
+  } = await readValidatedBody(event, schema.parse)
 
   const user = await db.user.create({
     data: {
