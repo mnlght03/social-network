@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
         },
       },
       imageUrl: true,
+      createdAt: true,
     },
     orderBy: {
       id: 'desc',
