@@ -4,7 +4,7 @@ import { db } from '~/db'
 import { setRefreshCookie } from '~/server/utils/auth'
 import { generateJwtPair } from '~/server/utils/jwt'
 
-const schema = createBodySchema(z.object({
+const schema = createBodyValidationSchema(z.object({
   username: z.string(),
   password: z.string(),
 }))
