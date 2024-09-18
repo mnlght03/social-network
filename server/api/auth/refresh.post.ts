@@ -19,13 +19,19 @@ export default defineEventHandler(async (event) => {
   }
 
   // TODO: use ORM relation user -> refreshTokens[]
-  const user = await db.user.findUnique({ where: { id: payload.userId } })
-  const dbToken = await db.refreshToken.findUnique({ where: { token: refreshToken, userId: payload.userId } })
+  const user = await db.user.findUnique({
+    where: { id: payload.userId },
+  })
+  const dbToken = await db.refreshToken.findUnique({
+    where: { token: refreshToken, userId: payload.userId },
+  })
   if (!user || !dbToken) {
     return handleError(event)
   }
 
-  await db.refreshToken.delete({ where: { token: refreshToken, userId: payload.userId } })
+  await db.refreshToken.delete({
+    where: { token: refreshToken, userId: payload.userId },
+  })
   const newPair = generateJwtPair(payload.userId)
   await db.refreshToken.create({
     data: {

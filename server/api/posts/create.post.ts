@@ -4,14 +4,19 @@ import { z } from 'zod'
 import { db } from '~/db'
 
 const bodySchema = createBodySchema(z.object({
-  text: z.string().array().transform(data => data[0]),
-  replyToId: z.string().array().transform(data => data[0]).optional(),
+  text: z.string().array()
+    .transform(data => data[0]),
+  replyToId: z.string().array()
+    .transform(data => data[0])
+    .optional(),
 }))
 
 const fileSchema = createBodySchema(z.object({
   image: z.object({
     filepath: z.string(),
-  }).array().transform(data => data[0]).optional(),
+  }).array()
+    .transform(data => data[0])
+    .optional(),
 }))
 
 export default defineEventHandler(async (event) => {

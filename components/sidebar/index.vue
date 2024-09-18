@@ -23,7 +23,10 @@ const whoToFollow = [
   <div class="hidden md:block col-span-12  md:col-span-3 xl:col-span-4">
     <aside>
       <WidgetCard title="What's happening">
-        <WidgetCardItem v-for="item, i in whatsHappening" :key="i">
+        <WidgetCardItem
+          v-for="item, i in whatsHappening"
+          :key="i"
+        >
           <h3 class="font-bold text-base dark:text-white text-gray-800">
             {{ item.title }}
           </h3>
@@ -34,9 +37,16 @@ const whoToFollow = [
       </WidgetCard>
 
       <WidgetCard title="Who to follow">
-        <WidgetCardItem v-for="item, i in whoToFollow" :key="i">
+        <WidgetCardItem
+          v-for="item, i in whoToFollow"
+          :key="i"
+        >
           <div class="flex items-center p-2">
-            <img class="w-10 h-10 rounded-full" :src="item.image" alt="">
+            <img
+              class="w-10 h-10 rounded-full"
+              :src="item.image"
+              alt=""
+            >
 
             <div class="ml-2">
               <h1 class="text-base font-bold text-gray-900 dark:text-white">

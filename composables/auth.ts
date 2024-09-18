@@ -27,7 +27,8 @@ export function useAuth() {
       token.value = accessToken
     },
     retryStatusCodes: [401],
-    // Arbitrary number > 1 is needed to retry on POST, PATCH, PUT and DELETE requests
+    // Arbitrary number > 1 is needed to retry
+    // on POST, PATCH, PUT and DELETE requests.
     retry: 2,
   })
 

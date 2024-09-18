@@ -15,7 +15,9 @@ const schema = createBodySchema(z.object({
   username: z.string()
     .min(usernameMinLength, usernameLengthErrorMessage)
     .max(usernameMaxLength, usernameLengthErrorMessage),
-  name: z.string().regex(/\w+( \w+)?/, 'Invalid name.').optional(),
+  name: z.string()
+    .regex(/\w+( \w+)?/, 'Invalid name.')
+    .optional(),
   password: z.string()
     .min(passwordMinLength, passwordLengthErrorMessage)
     .max(passwordMaxLength, passwordLengthErrorMessage),
@@ -29,7 +31,12 @@ const schema = createBodySchema(z.object({
 export type RegisterRequest = z.infer<typeof schema>
 
 export default defineEventHandler(async (event) => {
-  const { email, username, name, password } = schema.parse(await readBody(event))
+  const {
+    email,
+    username,
+    name,
+    password,
+  } = schema.parse(await readBody(event))
 
   const user = await db.user.create({
     data: {

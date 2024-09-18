@@ -64,14 +64,28 @@ const tabs = [
   <div class="hidden md:block xs:col-span-1 xl:col-span-2">
     <div class="sticky top-0">
       <div class="flex flex-col ">
-        <div class="p-2 my-2 hover:bg-blue-50 rounded-full w-min dark:hover:bg-white/20" :class="defaultTransition">
-          <NuxtLink to="/" @click.prevent="darkMode = !darkMode">
-            <IconLogo class="w-6 h-6" :class="darkMode ? 'text-dim-600' : 'text-dim-100'" :font-controlled="false" />
+        <div
+          class="p-2 my-2 hover:bg-blue-50 rounded-full w-min dark:hover:bg-white/20"
+          :class="defaultTransition"
+        >
+          <NuxtLink
+            to="/"
+            @click.prevent="darkMode = !darkMode"
+          >
+            <IconLogo
+              class="w-6 h-6"
+              :class="darkMode ? 'text-dim-600' : 'text-dim-100'"
+              :font-controlled="false"
+            />
           </NuxtLink>
         </div>
 
         <nav class="mt-2 flex flex-col gap-3">
-          <NavbarTab v-for="(tab, i) in tabs" :key="i" :to="tab.to">
+          <NavbarTab
+            v-for="(tab, i) in tabs"
+            :key="i"
+            :to="tab.to"
+          >
             <template #icon>
               <component :is="tab.icon" />
             </template>

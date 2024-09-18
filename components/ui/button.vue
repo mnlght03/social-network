@@ -2,7 +2,7 @@
 const props = withDefaults(
   defineProps<{
     disabled?: boolean
-    size: 'sm' | 'md' | 'lg'
+    size?: 'sm' | 'md' | 'lg'
   }>(),
   {
     size: 'md',
@@ -34,7 +34,7 @@ const fontVariant = computed(() => {
 
 <template>
   <button
-    class="text-white bg-blue-400 rounded-full hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed "
+    class="text-white bg-blue-400 rounded-full hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
     :class="[sizeVariant, fontVariant]"
     :disabled="disabled"
   >
