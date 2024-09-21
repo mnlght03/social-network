@@ -21,42 +21,42 @@ const tabs = [
   {
     icon: HomeIcon,
     text: 'Home',
-    to: '#',
+    to: '/',
   },
   {
     icon: HashtagIcon,
     text: 'Explore',
-    to: '#',
+    to: '/',
   },
   {
     icon: BellIcon,
     text: 'Notifications',
-    to: '#',
+    to: '/',
   },
   {
     icon: InboxIcon,
     text: 'Messages',
-    to: '#',
+    to: '/',
   },
   {
     icon: BookmarkIcon,
     text: 'Bookmarks',
-    to: '#',
+    to: '/',
   },
   {
     icon: DocumentTextIcon,
     text: 'Lists',
-    to: '#',
+    to: '/',
   },
   {
     icon: UserIcon,
     text: 'Profile',
-    to: '#',
+    to: '/',
   },
   {
     icon: EllipsisHorizontalCircleIcon,
     text: 'More',
-    to: '#',
+    to: '/',
   },
 ]
 </script>
@@ -82,7 +82,7 @@ const tabs = [
         </div>
 
         <nav class="mt-2 flex flex-col gap-3">
-          <NavbarTab
+          <LayoutNavbarTab
             v-for="(tab, i) in tabs"
             :key="i"
             :to="tab.to"
@@ -91,7 +91,7 @@ const tabs = [
               <component :is="tab.icon" />
             </template>
             {{ tab.text }}
-          </NavbarTab>
+          </LayoutNavbarTab>
 
           <UiButton class="xl:hidden">
             <PencilIcon class="w-6 h-6 font-bold" />

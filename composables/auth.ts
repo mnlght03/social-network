@@ -1,9 +1,9 @@
 import type { LoginRequest, RegisterRequest } from '~/server/types'
-import type { User } from '~/types'
+import type { UserView } from '~/types'
 
 export function useAuth() {
   const token = useState<string | undefined>(() => undefined)
-  const user = useState<User | undefined>(() => undefined)
+  const user = useState<UserView | undefined>(() => undefined)
 
   const refreshTokens = async () => {
     const { accessToken } = await $fetch('/api/auth/refresh', {

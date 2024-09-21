@@ -3,9 +3,17 @@ const user = useAuthUser()
 const { $fetchWithToken } = useAuth()
 
 // TODO: fix ssr fetch
-const { data: posts, refresh } = await useFetch('/api/posts', {
+const { data: posts, refresh, error, status } = await useFetch('/api/posts', {
   $fetch: $fetchWithToken,
   server: false,
+})
+
+const loading = computed(() => status.value === 'pending')
+
+watchEffect(() => {
+  if (error.value) {
+    throw createError(error.value)
+  }
 })
 
 const { borderColor } = useTailwindConfig()
@@ -13,7 +21,12 @@ const { borderColor } = useTailwindConfig()
 
 <template>
   <div>
-    <MainSection title="Home">
+    <MainSection
+      :loading="loading"
+    >
+      <template #title>
+        qweqeq
+      </template>
       <PostForm
         v-if="user"
         :user="user"

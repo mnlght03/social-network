@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { UserPost } from '~/types'
+import type { UserPostView } from '~/types'
 
 defineProps<{
-  post: UserPost
+  post: UserPostView
 }>()
 
 const { borderColor } = useTailwindConfig()

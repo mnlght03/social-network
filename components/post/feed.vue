@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { UserPost } from '~/types'
+import type { UserPostView } from '~/types'
 
 defineProps<{
-  posts: UserPost[]
+  posts: UserPostView[]
 }>()
 
 const { borderColor, defaultTransition } = useTailwindConfig()
+
+// TODO: add paginated scroll
 </script>
 
 <template>
@@ -17,9 +19,11 @@ const { borderColor, defaultTransition } = useTailwindConfig()
         class="border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300"
         :class="[borderColor, defaultTransition]"
       >
-        <PostItem
-          :post="post"
-        />
+        <NuxtLink :to="`/post/${post.id}`">
+          <PostItem
+            :post="post"
+          />
+        </NuxtLink>
       </li>
     </ul>
     <div v-else>

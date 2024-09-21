@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { User } from '~/types'
+import { useMagicKeys, whenever } from '@vueuse/core'
+import type { UserView } from '~/types'
+
 import IconPicture from '~/assets/icons/picture.svg'
 import IconGif from '~/assets/icons/gif.svg'
 import IconChart from '~/assets/icons/chart.svg'
@@ -7,7 +9,7 @@ import IconEmoji from '~/assets/icons/emoji.svg'
 import IconCalendar from '~/assets/icons/calendar.svg'
 
 defineProps<{
-  user: User
+  user: UserView
 }>()
 
 const emit = defineEmits<{
@@ -16,54 +18,68 @@ const emit = defineEmits<{
 
 const fileInput = ref<HTMLInputElement>()
 const message = ref('')
-const files = ref<File[]>([])
+const imageFile = ref<File>()
 const previewImageUrl = ref<string | null>()
 
-function handleFileChange(event: Event) {
+const loading = ref(false)
+const submitDisabled = computed(() => loading.value || !message.value.length)
+
+async function handleFileChange(event: Event) {
   const file = (event.target as HTMLInputElement)?.files?.[0]
+
   if (!file) {
     return
   }
-  files.value.push(file)
-  const reader = new FileReader()
-  reader.addEventListener('load', () => {
-    previewImageUrl.value = reader.result?.toString()
-  })
-  reader.readAsDataURL(file)
-}
 
-const submitting = ref(false)
-const submitDisabled = computed(() => submitting.value || !message.value.length)
+  loading.value = true
+  imageFile.value = file
+
+  await new Promise<void>((resolve) => {
+    const reader = new FileReader()
+    reader.addEventListener('load', () => {
+      previewImageUrl.value = reader.result?.toString()
+      resolve()
+    })
+    reader.readAsDataURL(file)
+  })
+}
 
 const { $fetchWithToken } = useAuth()
 
 async function submit() {
+  if (submitDisabled.value) {
+    return
+  }
+
   const data = new FormData()
   data.append('text', message.value)
-  files.value.forEach((file) => {
-    data.append('image', file)
-  })
+
+  if (imageFile.value) {
+    data.append('image', imageFile.value)
+  }
+
+  loading.value = true
+
   await $fetchWithToken('/api/posts/create', {
     method: 'post',
     body: data,
+  }).then(() => {
+    message.value = ''
+    imageFile.value = undefined
+    emit('postCreate')
   })
-  message.value = ''
-  files.value = []
-  emit('postCreate')
+    .finally(() => loading.value = false)
 }
+
+const ctrlEnter = useMagicKeys()['Ctrl+Enter']
+
+whenever(ctrlEnter, submit)
 
 const { borderColor } = useTailwindConfig()
 </script>
 
 <template>
   <div
-    v-if="submitting"
-    class="flex items-center justfiy-center py-6"
-  >
-    <UiSpinner />
-  </div>
-  <div
-    v-else
     class="flex shrink-0 p-4 pb-0"
   >
     <div class="w-10 h-10 mt-2 rounded-full overflow-hidden">
@@ -81,6 +97,7 @@ const { borderColor } = useTailwindConfig()
       <div class="w-full p-2">
         <textarea
           v-model.trim="message"
+          placeholder="What's on your mind?"
           class="w-full h-10 text-lg text-gray-900 placeholder:text-gray-400 bg-transparent border-0 dark:text-white focus:ring-0"
         />
       </div>

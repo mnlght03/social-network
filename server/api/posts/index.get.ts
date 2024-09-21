@@ -1,6 +1,7 @@
 // import { z } from 'zod'
+import { selectUserPostForView } from '.'
 import { db } from '~/db'
-import type { UserPost } from '~/types'
+import type { UserPostView } from '~/types'
 
 // const querySchema = createValidationSchema(z.object({
 //   author: z.string().min(1),
@@ -9,27 +10,14 @@ import type { UserPost } from '~/types'
 export default defineEventHandler(async (event) => {
   const userId = await getEventUserIdOrThrow(event)
 
-  const posts: UserPost[] = await db.userPost.findMany({
+  const posts: UserPostView[] = await db.userPost.findMany({
     where: {
       deleted: false,
       authorId: userId,
       // TODO: add replies in select query
       // replyToId: null,
     },
-    select: {
-      id: true,
-      text: true,
-      author: {
-        select: {
-          id: true,
-          username: true,
-          profileImage: true,
-        },
-      },
-      imageUrl: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserPostForView,
     orderBy: {
       createdAt: 'desc',
     },
