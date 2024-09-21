@@ -10,11 +10,7 @@ const { data: posts, refresh, error, status } = await useFetch('/api/posts', {
 
 const loading = computed(() => status.value === 'pending')
 
-watchEffect(() => {
-  if (error.value) {
-    throw createError(error.value)
-  }
-})
+watchFetchError(error)
 
 const { borderColor } = useTailwindConfig()
 </script>

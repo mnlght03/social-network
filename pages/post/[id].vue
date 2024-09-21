@@ -10,11 +10,7 @@ const { data: post, error, status } = await useFetch(() => `/api/posts/post/${po
 
 const loading = computed(() => status.value === 'pending')
 
-watchEffect(() => {
-  if (error.value) {
-    throw createError(error.value)
-  }
-})
+watchFetchError(error)
 </script>
 
 <template>
