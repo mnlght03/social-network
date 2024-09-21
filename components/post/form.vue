@@ -64,13 +64,13 @@ const { borderColor } = useTailwindConfig()
   </div>
   <div
     v-else
-    class="flex items-centershrink-0 p-4 pb-0"
+    class="flex shrink-0 p-4 pb-0"
   >
-    <div class="flex w-12 items-top">
+    <div class="w-10 h-10 mt-2 rounded-full overflow-hidden">
       <img
-        :src="user.profileImage ?? undefined"
+        :src="user.profileImage ?? getRandomImageUrl()"
         alt="profile image"
-        class="w-10 h-10 rounded-full"
+        class="object-cover"
       >
     </div>
 

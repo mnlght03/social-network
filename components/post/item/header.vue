@@ -13,11 +13,10 @@ const postedAt = useState(() => humanizePostDate(props.createdAt))
 </script>
 
 <template>
-  <div class="flex p-4 gap-3">
-    <div class="w-10 h-10 rounded-full">
+  <div class="flex p-4 pb-0 gap-3">
+    <div class="w-10 h-10 rounded-full overflow-hidden">
       <img
-        v-if="author.profileImageUrl"
-        :src="author.profileImageUrl"
+        :src="author.profileImageUrl || getRandomImageUrl()"
         alt=""
         class="object-cover"
       >

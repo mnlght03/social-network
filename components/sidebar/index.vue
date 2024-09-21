@@ -14,7 +14,7 @@ const whoToFollow = [
   {
     name: 'Josh Woods',
     handle: '@joshwoods',
-    image: 'https://picsum.photos/200/200',
+    image: getRandomImageUrl(),
   },
 ]
 </script>
