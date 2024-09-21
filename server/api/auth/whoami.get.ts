@@ -1,8 +1,9 @@
 import { db } from '~/db'
+import type { User } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const userId = getEventUserIdOrThrow(event)
-  const user = await db.user.findUniqueOrThrow({
+  const user: User = await db.user.findUniqueOrThrow({
     where: { id: userId },
     select: {
       id: true,

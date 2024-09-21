@@ -5,6 +5,14 @@ export function useAuth() {
   const token = useState<string | undefined>(() => undefined)
   const user = useState<User | undefined>(() => undefined)
 
+  const refreshTokens = async () => {
+    const { accessToken } = await $fetch('/api/auth/refresh', {
+      method: 'post',
+      credentials: 'same-origin',
+    })
+    token.value = accessToken
+  }
+
   // Send authorization token on each request,
   // on 401 error refresh tokens and try reqeust again.
   const $fetchWithToken = $fetch.create({
@@ -17,27 +25,18 @@ export function useAuth() {
       }
     },
     async onResponseError() {
-      const { accessToken } = await $fetch('/api/auth/refresh', {
-        method: 'post',
-        credentials: 'include',
-        headers: {
-          authorization: `Bearer: ${token.value}`,
-        },
-      })
-      token.value = accessToken
+      try {
+        await refreshTokens()
+      }
+      catch (e) {
+        console.error(e)
+      }
     },
     retryStatusCodes: [401],
     // Arbitrary number > 1 is needed to retry
     // on POST, PATCH, PUT and DELETE requests.
     retry: 2,
   })
-
-  const refreshTokens = async () => {
-    const { accessToken } = await $fetchWithToken('/api/auth/refresh', {
-      method: 'post',
-    })
-    token.value = accessToken
-  }
 
   const fetchCurrentUser = async () => {
     const fetchedUser = await $fetchWithToken('/api/auth/whoami')

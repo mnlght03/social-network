@@ -10,7 +10,7 @@ const passwordMinLength = 6
 const passwordMaxLength = 256
 const passwordLengthErrorMessage = `Password should be ${passwordMinLength} - ${passwordMaxLength} symbols long.`
 
-const schema = createBodyValidationSchema(z.object({
+const schema = createValidationSchema(z.object({
   email: z.string().email('Invalid email.'),
   username: z.string()
     .min(usernameMinLength, usernameLengthErrorMessage)

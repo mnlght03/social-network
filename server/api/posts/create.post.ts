@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { db } from '~/db'
 
-const bodySchema = createBodyValidationSchema(z.object({
+const bodySchema = createValidationSchema(z.object({
   text: z.string().array()
     .transform(data => data[0]),
   replyToId: z.string().array()
@@ -11,7 +11,7 @@ const bodySchema = createBodyValidationSchema(z.object({
     .optional(),
 }))
 
-const fileSchema = createBodyValidationSchema(z.object({
+const fileSchema = createValidationSchema(z.object({
   image: z.object({
     filepath: z.string(),
   }).array()
