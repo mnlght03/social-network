@@ -18,18 +18,18 @@ const { borderColor } = useTailwindConfig()
 <template>
   <div>
     <MainSection
+      title="Home"
       :loading="loading"
     >
-      <template #title>
-        qweqeq
+      <template #persistent>
+        <PostForm
+          v-if="user"
+          :user="user"
+          class="border-b"
+          :class="borderColor"
+          @post-create="refresh"
+        />
       </template>
-      <PostForm
-        v-if="user"
-        :user="user"
-        class="border-b"
-        :class="borderColor"
-        @post-create="refresh"
-      />
       <PostFeed
         v-if="posts"
         :posts="posts"

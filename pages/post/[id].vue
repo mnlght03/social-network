@@ -11,6 +11,8 @@ const { data: post, error, status } = await useFetch(() => `/api/posts/post/${po
 const loading = computed(() => status.value === 'pending')
 
 watchFetchError(error)
+
+const { borderColor } = useTailwindConfig()
 </script>
 
 <template>
@@ -22,6 +24,8 @@ watchFetchError(error)
       <PostItem
         v-if="post"
         :post="post"
+        class="border-b"
+        :class="borderColor"
       />
     </MainSection>
   </div>
