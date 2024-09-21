@@ -30,5 +30,3 @@ const { borderColor } = useTailwindConfig()
     </MainSection>
   </div>
 </template>
-
-<style module lang="scss"></style>

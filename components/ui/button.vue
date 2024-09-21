@@ -41,5 +41,3 @@ const fontVariant = computed(() => {
     <slot />
   </button>
 </template>
-
-<style module lang="scss"></style>

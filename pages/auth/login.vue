@@ -47,5 +47,3 @@ async function submit() {
     </button>
   </form>
 </template>
-
-<style module lang="scss"></style>

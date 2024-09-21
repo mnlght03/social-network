@@ -34,5 +34,3 @@ const id = useId()
     >
   </div>
 </template>
-
-<style module lang="scss"></style>

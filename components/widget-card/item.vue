@@ -10,5 +10,3 @@ const { borderColor } = useTailwindConfig()
     <slot />
   </div>
 </template>
-
-<style module lang="scss"></style>

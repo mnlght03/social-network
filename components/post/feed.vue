@@ -33,5 +33,3 @@ const { borderColor, defaultTransition } = useTailwindConfig()
     </div>
   </div>
 </template>
-
-<style module lang="scss"></style>

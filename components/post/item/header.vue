@@ -40,5 +40,3 @@ const postedAt = useState(() => humanizePostDate(props.createdAt))
     </div>
   </div>
 </template>
-
-<style module lang="scss"></style>

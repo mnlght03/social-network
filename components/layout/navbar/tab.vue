@@ -26,5 +26,3 @@ const { defaultTransition } = useTailwindConfig()
     </div>
   </NuxtLink>
 </template>
-
-<style module lang="scss"></style>

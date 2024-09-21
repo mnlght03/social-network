@@ -66,5 +66,3 @@ const whoToFollow = [
     </aside>
   </div>
 </template>
-
-<style module lang="scss"></style>
