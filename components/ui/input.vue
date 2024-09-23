@@ -5,6 +5,7 @@ withDefaults(
     placeholder?: string
     required?: boolean
     type?: string
+    errors?: string[]
   }>(),
   {
     required: false,
@@ -31,6 +32,12 @@ const id = useId()
       :type="type"
       class="mt-1 block px-4 py-2 w-full border border-gray-300 rounded-full shadow-sm sm:text-sm focus:outline-blue-500"
       :placeholder="placeholder"
+      :required="required"
     >
+    <ui-errors
+      v-if="errors?.length"
+      class="ml-4"
+      :errors="errors"
+    />
   </div>
 </template>

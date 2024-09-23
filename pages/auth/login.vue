@@ -1,9 +1,6 @@
 <script setup lang="ts">
+import { FetchError } from 'ofetch'
 import type { LoginRequest } from '~/server/types'
-
-definePageMeta({
-  layout: 'auth',
-})
 
 const auth = useAuth()
 
@@ -12,27 +9,31 @@ const data = reactive<LoginRequest>({
   password: '',
 })
 
+const error = ref<FetchError>()
+
 async function submit() {
   try {
     await auth.login(data)
     await navigateTo('/')
   }
   catch (e) {
-    // TODO: add error handling
-    console.error(e)
+    if (e instanceof FetchError) {
+      error.value = e
+    }
   }
 }
 </script>
 
 <template>
-  <form
-    class="pt-5 space-y-6"
+  <UiForm
+    :errors="error?.data?.formErrors"
     @submit.prevent="submit"
   >
     <UiInput
       v-model.trim="data.username"
       label="Username"
       placeholder="@username"
+      :errors="error?.data?.fieldErrors?.username"
       required
     />
     <UiInput
@@ -40,10 +41,22 @@ async function submit() {
       label="Password"
       placeholder="******"
       type="password"
+      :errors="error?.data?.fieldErrors?.password"
       required
     />
-    <button>
-      Login
-    </button>
-  </form>
+    <template #bottom>
+      <UiButton type="submit">
+        Login
+      </UiButton>
+      <div class="text-sm text-gray-700">
+        Do not have account?
+        <NuxtLink
+          to="/auth/register"
+          class="font-medium underline underline-offset-2"
+        >
+          Register
+        </NuxtLink>
+      </div>
+    </template>
+  </UiForm>
 </template>

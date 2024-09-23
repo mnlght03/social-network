@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import type { ButtonHTMLAttributes } from 'vue'
+
 const props = withDefaults(
   defineProps<{
-    disabled?: boolean
     size?: 'sm' | 'md' | 'lg'
+    type?: ButtonHTMLAttributes['type']
   }>(),
   {
-    size: 'md',
     disabled: false,
+    type: 'button',
   },
 )
 
@@ -34,9 +36,10 @@ const fontVariant = computed(() => {
 
 <template>
   <button
-    class="text-white bg-blue-400 rounded-full hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
+    class="text-white shadow-sm bg-blue-400 rounded-full hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
+    :type="type"
     :class="[sizeVariant, fontVariant]"
-    :disabled="disabled"
+    v-bind="$attrs"
   >
     <slot />
   </button>

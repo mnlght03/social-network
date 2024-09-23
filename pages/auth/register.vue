@@ -1,9 +1,6 @@
 <script setup lang="ts">
+import { FetchError } from 'ofetch'
 import type { RegisterRequest } from '~/server/types'
-
-definePageMeta({
-  layout: 'auth',
-})
 
 const auth = useAuth()
 
@@ -14,21 +11,24 @@ const data = reactive<RegisterRequest>({
   repeatPassword: '',
 })
 
+const error = ref<FetchError>()
+
 async function submit() {
   try {
     await auth.register(data)
     await navigateTo('/auth/login')
   }
   catch (e) {
-    // TODO: add error handling
-    console.error(e)
+    if (e instanceof FetchError) {
+      error.value = e
+    }
   }
 }
 </script>
 
 <template>
-  <form
-    class="pt-5 space-y-6"
+  <UiForm
+    :errors="error?.data?.formErrors"
     @submit.prevent="submit"
   >
     <UiInput
@@ -37,12 +37,14 @@ async function submit() {
       placeholder="your@email"
       type="email"
       required
+      :errors="error?.data?.fieldErrors?.email"
     />
     <UiInput
       v-model.trim="data.username"
       label="Username"
       placeholder="@username"
       required
+      :errors="error?.data?.fieldErrors?.username"
     />
     <UiInput
       v-model.trim="data.password"
@@ -50,6 +52,7 @@ async function submit() {
       placeholder="******"
       type="password"
       required
+      :errors="error?.data?.fieldErrors?.password"
     />
     <UiInput
       v-model.trim="data.repeatPassword"
@@ -57,9 +60,12 @@ async function submit() {
       placeholder="******"
       type="password"
       required
+      :errors="error?.data?.fieldErrors?.repeatPassword"
     />
-    <button>
-      Register
-    </button>
-  </form>
+    <template #bottom>
+      <UiButton type="submit">
+        Register
+      </UiButton>
+    </template>
+  </UiForm>
 </template>

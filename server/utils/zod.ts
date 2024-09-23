@@ -4,10 +4,6 @@ import type { ZodError, ZodTypeAny } from 'zod'
 export function createValidationSchema<T extends ZodTypeAny>(schema: T) {
   return schema
     .catch(({ error }: { error: ZodError }) => {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Bad Request',
-        data: error.flatten().fieldErrors,
-      })
+      throw error.flatten()
     })
 }

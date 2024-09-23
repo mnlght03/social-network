@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div class="flex h-screen">
     <div class="relative flex-1 w-0 hidden lg:block">
