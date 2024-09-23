@@ -17,6 +17,16 @@ export default defineNuxtConfig({
     ],
   },
 
+  routeRules: {
+    '/**': {
+      headers: {
+        'Accept-CH': 'Sec-CH-Prefers-Color-Scheme',
+        'Vary': 'Sec-CH-Prefers-Color-Scheme',
+        'Critical-CH': 'Sec-CH-Prefers-Color-Scheme',
+      },
+    },
+  },
+
   // Override in .env with NUXT_ prefix, i.e. NUXT_DATABASE_URL
   runtimeConfig: {
     databaseUrl: '',

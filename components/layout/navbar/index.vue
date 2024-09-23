@@ -10,10 +10,9 @@ import {
   PencilIcon,
   UserIcon,
 } from '@heroicons/vue/16/solid'
-import { useDark } from '@vueuse/core'
 import IconLogo from '~/public/logo.svg'
 
-const darkMode = useDark()
+const darkMode = useDarkMode()
 
 const { defaultTransition } = useTailwindConfig()
 

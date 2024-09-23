@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useDark } from '@vueuse/core'
-
-// Initialize dark mode state
-useDark()
+const dark = useDarkMode()
+console.log(dark.value)
 </script>
 
 <template>
-  <div>
+  <div :class="{ dark }">
     <div class="bg-white dark:bg-dim-900">
       <div class="min-h-screen">
         <div class="grid grid-cols-12 mx-auto sm:px-5 lg:max-w-7xl lg:px-8 lg:gap-10">
