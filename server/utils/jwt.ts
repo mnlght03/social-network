@@ -2,7 +2,9 @@ import jwt from 'jsonwebtoken'
 
 const { jwtSecret } = useRuntimeConfig()
 
-// TODO: add assertion that jwtSecret exists
+if (!jwtSecret) {
+  throw new Error('Jwt secret not found. Make sure NUXT_JWT_SECRET is set in .env.')
+}
 
 function generateUserToken(userId: string, expiresIn: string) {
   return jwt.sign({ userId }, jwtSecret, {
