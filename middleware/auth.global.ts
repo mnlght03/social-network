@@ -1,12 +1,9 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (import.meta.server) {
-    return
-  }
   const authToken = useAuthToken()
-  const auth = useAuth()
   if (authToken.value || to.path.startsWith('/auth')) {
     return true
   }
+  const auth = useAuth()
   try {
     await auth.refreshTokens()
     await auth.fetchCurrentUser()

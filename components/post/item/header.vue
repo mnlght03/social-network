@@ -28,6 +28,7 @@ const postedAt = useState(() => humanizePostDate(props.createdAt))
       <span class="text-sm font-medium text-gray-400 ">
         <NuxtLink
           to="#"
+          @click.stop
         >
           {{ `@${author.username}` }}
         </NuxtLink>

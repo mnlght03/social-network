@@ -1,4 +1,6 @@
 export default defineNuxtPlugin(async () => {
   const auth = useAuth()
-  await auth.init()
+  if (!auth.token.value || !auth.user.value) {
+    await auth.init()
+  }
 })

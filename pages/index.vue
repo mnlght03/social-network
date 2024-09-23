@@ -2,10 +2,8 @@
 const user = useAuthUser()
 const { $fetchWithToken } = useAuth()
 
-// TODO: fix ssr fetch
 const { data: posts, refresh, error, status } = await useFetch('/api/posts', {
   $fetch: $fetchWithToken,
-  server: false,
 })
 
 const loading = computed(() => status.value === 'pending')

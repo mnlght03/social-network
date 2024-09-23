@@ -6,11 +6,19 @@ export function useAuth() {
   const user = useState<UserView | undefined>(() => undefined)
 
   const refreshTokens = async () => {
-    const { accessToken } = await $fetch('/api/auth/refresh', {
+    // Read and write refresh cookie in ssr mode
+    const refreshTokenCookie = useCookie('refresh_token', {
+      httpOnly: true,
+    })
+    const { accessToken, refreshToken } = await $fetch('/api/auth/refresh', {
       method: 'post',
       credentials: 'same-origin',
+      body: {
+        refreshToken: refreshTokenCookie.value,
+      },
     })
     token.value = accessToken
+    refreshTokenCookie.value = refreshToken
   }
 
   // Send authorization token on each request,
